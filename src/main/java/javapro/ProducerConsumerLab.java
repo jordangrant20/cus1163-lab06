@@ -52,37 +52,46 @@ public class ProducerConsumerLab {
      *    - In catch block, print "[Producer] was interrupted"
      */
     static class Producer implements Runnable {
-        // TODO 1: Implement Producer class here
-        // Step 1: Add private SharedBuffer field
+        private final SharedBuffer buffer;
 
         // Step 2: Add constructor
         public Producer(SharedBuffer buffer) {
-            // Initialize the buffer field
+            this.buffer = buffer;
         }
 
         // Step 3: Implement run() method
         @Override
         public void run() {
-            // Add your implementation here
+            try {
+                for (int i = 0; i < 10; i++) {
+                    buffer.produce(i);
+                }
+                System.out.println("[Producer] finished producing 10 items");
+            } catch (InterruptedException e) {
+                System.out.println("[Producer] was interrupted");
+            }
         }
     }
 
-    /**
-     * TODO 2: Implement Consumer class
-     */
     static class Consumer implements Runnable {
-        // TODO 2: Implement Consumer class here
-        // Step 1: Add private SharedBuffer field
+        private final SharedBuffer buffer;
 
-        // Step 2: Add constructor
+        // Buffer constructor
         public Consumer(SharedBuffer buffer) {
-            // Initialize the buffer field
+            this.buffer = buffer;
         }
 
-        // Step 3: Implement run() method
+        // Run method implementation
         @Override
         public void run() {
-            // Add your implementation here
+            try {
+                for (int i = 0; i < 10; i++) {
+                    buffer.consume();
+                }
+                System.out.println("[Consumer] finished consuming 10 items");
+            } catch (InterruptedException e) {
+                System.out.println("[Consumer] was interrupted");
+            }
         }
     }
 
@@ -91,13 +100,10 @@ public class ProducerConsumerLab {
      */
     public static void main(String[] args) {
         SharedBuffer buffer = new SharedBuffer(5);
-
         Producer producer = new Producer(buffer);
         Consumer consumer = new Consumer(buffer);
-
         Thread producerThread = new Thread(producer);
         Thread consumerThread = new Thread(consumer);
-
         System.out.println();
         producerThread.start();
         consumerThread.start();
@@ -113,3 +119,4 @@ public class ProducerConsumerLab {
         System.out.println("\nAll threads completed successfully!");
     }
 }
+
