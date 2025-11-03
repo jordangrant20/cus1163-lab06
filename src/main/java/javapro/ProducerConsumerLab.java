@@ -39,27 +39,15 @@ public class ProducerConsumerLab {
         }
     }
 
-    /**
-     * TODO 1: Implement Producer class
-     * Create a class that implements Runnable and:
-     * 1. Has a private SharedBuffer field
-     * 2. Has a constructor that accepts SharedBuffer parameter
-     * 3. In run() method:
-     *    - Use try-catch for InterruptedException
-     *    - Loop 10 times (i from 0 to 9)
-     *    - Call buffer.produce(i) each iteration
-     *    - Print "[Producer] finished producing 10 items" when done
-     *    - In catch block, print "[Producer] was interrupted"
-     */
     static class Producer implements Runnable {
         private final SharedBuffer buffer;
 
-        // Step 2: Add constructor
+        // Buffer constructor
         public Producer(SharedBuffer buffer) {
             this.buffer = buffer;
         }
 
-        // Step 3: Implement run() method
+        // run method implementation
         @Override
         public void run() {
             try {
